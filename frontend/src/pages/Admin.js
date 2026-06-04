@@ -256,9 +256,7 @@ const Admin = () => {
               LOGIN
             </button>
           </form>
-          <p className="text-xs text-[#A3A199] mt-4 text-center">
-            Default: admin@vinesocial.tokyo / VineSocial2024!
-          </p>
+
         </div>
       </div>
     );
