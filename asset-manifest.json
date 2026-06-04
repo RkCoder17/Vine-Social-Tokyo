@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Vine-Social-Tokyo/static/css/main.d1597c92.css",
-    "main.js": "/Vine-Social-Tokyo/static/js/main.1baf3870.js",
+    "main.js": "/Vine-Social-Tokyo/static/js/main.bad2851f.js",
     "index.html": "/Vine-Social-Tokyo/index.html",
     "main.d1597c92.css.map": "/Vine-Social-Tokyo/static/css/main.d1597c92.css.map",
-    "main.1baf3870.js.map": "/Vine-Social-Tokyo/static/js/main.1baf3870.js.map"
+    "main.bad2851f.js.map": "/Vine-Social-Tokyo/static/js/main.bad2851f.js.map"
   },
   "entrypoints": [
     "static/css/main.d1597c92.css",
-    "static/js/main.1baf3870.js"
+    "static/js/main.bad2851f.js"
   ]
 }
