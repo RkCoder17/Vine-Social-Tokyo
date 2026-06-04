@@ -1,0 +1,99 @@
+{
+  "theme": "dark",
+  "archetype": "Archetype 5: Luxury",
+  "brand_name": "Vine Social Tokyo",
+  "emotional_tone": "Luxurious, intimate, warm, sophisticated, sensory",
+  "colors": {
+    "background": "#0F0F0F",
+    "surface": "#1B1C1A",
+    "surface_glass": "rgba(0, 0, 0, 0.6)",
+    "primary": "#CBA052",
+    "secondary": "#1B3B36",
+    "text_primary": "#F5F2E9",
+    "text_secondary": "#A3A199",
+    "border": "rgba(255, 255, 255, 0.1)",
+    "error": "#9E2A2B"
+  },
+  "typography": {
+    "heading_font": "Cormorant Garamond",
+    "body_font": "Outfit",
+    "h1": "text-5xl sm:text-6xl lg:text-7xl font-light tracking-tighter text-[#F5F2E9]",
+    "h2": "text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-[#F5F2E9]",
+    "h3": "text-xl sm:text-2xl font-normal text-[#CBA052]",
+    "body": "text-base font-light leading-relaxed text-[#A3A199]",
+    "overline": "text-xs font-semibold tracking-[0.2em] uppercase text-[#CBA052]"
+  },
+  "spacing_and_layout": {
+    "philosophy": "Generous Spacing, Optical Alignment",
+    "section_padding": "py-24 sm:py-32",
+    "container": "max-w-7xl mx-auto px-6 lg:px-8",
+    "grid_strategy": {
+      "gallery": "Bento Grid (Tetris Mode) - Asymmetrical, gap-6 to gap-8, mixing tall/wide/square image spans",
+      "menu": "List based or 2-column bento with generous vertical spacing (gap-12)",
+      "footer": "Massive top padding, dark contrast background, huge typography for brand name"
+    }
+  },
+  "surfaces": {
+    "header": "Crystal Glassmorphism: backdrop-blur-xl bg-black/60 with 1px border-b border-white/10",
+    "cards": "Minimalist borders: bg-transparent border border-white/10 hover:border-[#CBA052]/50 transition-colors",
+    "buttons": "Primary: bg-[#CBA052] text-[#0F0F0F] hover:bg-[#DBC184]. Secondary: border border-[#CBA052] text-[#CBA052] hover:bg-[#CBA052]/10"
+  },
+  "media": {
+    "images": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1767277680127-dc94441d576c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHx3aW5lJTIwZ2xhc3MlMjBkYXJrJTIwbHV4dXJ5JTIwcmVzdGF1cmFudHxlbnwwfHx8fDE3ODA2MDI3OTd8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Dimly lit room with textured walls, perfectly matches the dark luxury ambiance."
+      },
+      "about": {
+        "url": "https://images.unsplash.com/photo-1766832255363-c9f060ade8b0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHx3aW5lJTIwZ2xhc3MlMjBkYXJrJTIwbHV4dXJ5JTIwcmVzdGF1cmFudHxlbnwwfHx8fDE3ODA2MDI3OTd8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Elegant dining tables set in a cozy restaurant interior."
+      },
+      "menu_tapas": {
+        "url": "https://images.pexels.com/photos/14009279/pexels-photo-14009279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Inviting spread of various tapas dishes."
+      },
+      "menu_mains": {
+        "url": "https://images.pexels.com/photos/31860145/pexels-photo-31860145.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Exquisite tandoori chicken, representing modern Indian fine dining."
+      },
+      "menu_drinks": {
+        "url": "https://images.pexels.com/photos/880424/pexels-photo-880424.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Cozy restaurant interior with elegant wine glasses."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1645914589022-3917b99b9a69?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwc21hbGwlMjBwbGF0ZXMlMjB0YXBhcyUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc4MDYwMjc5N3ww&ixlib=rb-4.1.0&q=85",
+        "https://images.pexels.com/photos/14009280/pexels-photo-14009280.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.pexels.com/photos/8775401/pexels-photo-8775401.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.pexels.com/photos/3937670/pexels-photo-3937670.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.unsplash.com/photo-1689672235271-727de51355e6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHxpbmRpYW4lMjBmb29kJTIwZmluZSUyMGRpbmluZ3xlbnwwfHx8fDE3ODA2MDI3OTd8MA&ixlib=rb-4.1.0&q=85"
+      ]
+    },
+    "logos": {
+      "placeholder": "Text-based 'VS' logo in Gold (#CBA052) with 'Vine Social' in Cormorant Garamond if user logo asset is missing."
+    }
+  },
+  "components": {
+    "strategy": "Hybrid: Custom HTML/Tailwind for marketing/front-facing layouts. Shadcn UI for forms, admin panel, modals.",
+    "shadcn_customization": "Remove Vercel look. Set radii to rounded-none or rounded-sm. Borders to white/10. Backgrounds to deep charcoal.",
+    "icons": "lucide-react for standard UI, optional @phosphor-icons/react for high-end duotone menu icons."
+  },
+  "animations": {
+    "scroll": "Smooth scrolling required (framer-motion or lenis)",
+    "interactions": "Hover states must increase contrast. Button hovers subtle text-color/bg shifts.",
+    "hero": "Subtle scale-in/parallax on the hero background image. Max 50% opacity black overlay."
+  },
+  "accessibility_and_testing": {
+    "contrast": "Ensure #F5F2E9 text over #0F0F0F passes APCA.",
+    "testing": "All interactive elements (buttons, inputs, menu tabs, reservation links) MUST include a kebab-case data-testid attribute based on role."
+  },
+  "instructions_to_main_agent": [
+    "Build a Next.js (or React) multi-page style layout (or distinct sections) using Tailwind CSS.",
+    "Install and use Cormorant Garamond (headings) and Outfit (body).",
+    "Admin panel should be minimal, hidden behind simple auth, to manage gallery, menu, and announcements.",
+    "Do NOT use 'Inter' for headings. Strictly use the provided serif.",
+    "Use bento-style asymmetrical grids for the Gallery.",
+    "Never use full-width white backgrounds. Stick to the dark luxury palette.",
+    "Ensure all testing requirements (data-testid) are strictly met for form submissions, menu clicks, etc.",
+    "Use the provided actual image URLs from this json. NO PLACEHOLDERS."
+  ]
+}

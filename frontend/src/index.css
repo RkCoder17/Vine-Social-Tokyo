@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0F0F0F;
+  color: #F5F2E9;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.font-heading {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-body {
+  font-family: 'Outfit', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 15 15 15;
+    --foreground: 245 242 233;
+    --card: 27 28 26;
+    --card-foreground: 245 242 233;
+    --popover: 27 28 26;
+    --popover-foreground: 245 242 233;
+    --primary: 203 160 82;
+    --primary-foreground: 15 15 15;
+    --secondary: 27 59 54;
+    --secondary-foreground: 245 242 233;
+    --muted: 163 161 153;
+    --muted-foreground: 163 161 153;
+    --accent: 203 160 82;
+    --accent-foreground: 15 15 15;
+    --destructive: 158 42 43;
+    --destructive-foreground: 245 242 233;
+    --border: 255 255 255 / 0.1;
+    --input: 255 255 255 / 0.1;
+    --ring: 203 160 82;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-[#0F0F0F] text-[#F5F2E9];
+  }
+}
+
+.glass-effect {
+  backdrop-filter: blur(24px);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+  @apply bg-[#CBA052] text-[#0F0F0F] px-8 py-3 rounded-sm font-medium hover:bg-[#DBC184] transition-colors;
+}
+
+.btn-secondary {
+  @apply border border-[#CBA052] text-[#CBA052] px-8 py-3 rounded-sm font-medium hover:bg-[#CBA052]/10 transition-colors;
+}
+
+input, textarea, select {
+  @apply bg-[#1B1C1A] border border-white/10 text-[#F5F2E9] px-4 py-3 rounded-sm focus:outline-none focus:border-[#CBA052] transition-colors;
+}
+
+.menu-card {
+  @apply bg-transparent border border-white/10 hover:border-[#CBA052]/50 transition-colors p-6 rounded-sm;
+}
+
+@layer base {
+  [data-debug-wrapper="true"] {
+    display: contents !important;
+  }
+
+  [data-debug-wrapper="true"] > * {
+    margin-left: inherit;
+    margin-right: inherit;
+    margin-top: inherit;
+    margin-bottom: inherit;
+    padding-left: inherit;
+    padding-right: inherit;
+    padding-top: inherit;
+    padding-bottom: inherit;
+    column-gap: inherit;
+    row-gap: inherit;
+    gap: inherit;
+    border-left-width: inherit;
+    border-right-width: inherit;
+    border-top-width: inherit;
+    border-bottom-width: inherit;
+    border-left-style: inherit;
+    border-right-style: inherit;
+    border-top-style: inherit;
+    border-bottom-style: inherit;
+    border-left-color: inherit;
+    border-right-color: inherit;
+    border-top-color: inherit;
+    border-bottom-color: inherit;
+  }
+}

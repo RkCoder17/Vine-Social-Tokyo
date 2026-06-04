@@ -1,0 +1,43 @@
+.App {
+  min-height: 100vh;
+  background-color: #0F0F0F;
+}
+
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(15, 15, 15, 0) 0%, rgba(15, 15, 15, 0.5) 50%, rgba(15, 15, 15, 0.9) 100%);
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.bento-item-tall {
+  grid-row: span 2;
+}
+
+.bento-item-wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .bento-item-wide {
+    grid-column: span 1;
+  }
+  .bento-item-tall {
+    grid-row: span 1;
+  }
+}
+
+.image-hover-zoom {
+  overflow: hidden;
+}
+
+.image-hover-zoom img {
+  transition: transform 0.5s ease;
+}
+
+.image-hover-zoom:hover img {
+  transform: scale(1.05);
+}
