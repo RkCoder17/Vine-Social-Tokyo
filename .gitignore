@@ -1,0 +1,45 @@
+# Python / Backend
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+*.log
+
+# Environment files (NEVER commit secrets)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+frontend/build/
+frontend/.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Uploads / user data
+frontend/public/uploads/*
+!frontend/public/uploads/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
