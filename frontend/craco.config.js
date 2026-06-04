@@ -1,16 +1,25 @@
-const path = require('path');
+// craco.config.js
+const path = require("path");
+require("dotenv").config();
+
 module.exports = {
   webpack: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      "@": path.resolve(__dirname, "src"),
     },
-  },
-  style: {
-    postcss: {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
+    configure: (webpackConfig) => {
+      webpackConfig.watchOptions = {
+        ...webpackConfig.watchOptions,
+        ignored: [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/build/**",
+          "**/dist/**",
+          "**/coverage/**",
+          "**/public/**",
+        ],
+      };
+      return webpackConfig;
     },
   },
 };
