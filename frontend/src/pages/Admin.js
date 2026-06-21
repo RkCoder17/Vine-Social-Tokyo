@@ -14,7 +14,7 @@ import {
   X 
 } from 'lucide-react';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://vine-social-tokyo.onrender.com';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 const CATEGORIES = ['Small Plates', 'Tandoor', 'Mains', 'Drinks', 'Lunch Sets', 'Party Courses'];
 
@@ -32,7 +32,7 @@ const Admin = () => {
   
   // Gallery state
   const [galleryImages, setGalleryImages] = useState([]);
-  const [galleryForm, setGalleryForm] = useState({ url: '', caption: '', category: '' });
+  const [galleryForm, setGalleryForm] = useState({ url: '', caption: '', category: '', cloudinary_public_id: '' });
   
   // Settings state
   const [settings, setSettings] = useState({});
@@ -156,7 +156,7 @@ const Admin = () => {
       await axios.post(`${API}/gallery`, galleryForm, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setGalleryForm({ url: '', caption: '', category: '' });
+      setGalleryForm({ url: '', caption: '', category: '', cloudinary_public_id: '' });
       fetchData();
     } catch (error) {
       console.error('Error adding gallery image:', error);
@@ -191,12 +191,13 @@ const Admin = () => {
         },
       });
       const uploadedUrl = response.data.url;
+      const uploadedPublicId = response.data.public_id || '';
       
       // Update form based on active context
       if (activeTab === 'menu') {
         setMenuForm({ ...menuForm, image_url: uploadedUrl });
       } else if (activeTab === 'gallery') {
-        setGalleryForm({ ...galleryForm, url: uploadedUrl });
+        setGalleryForm({ ...galleryForm, url: uploadedUrl, cloudinary_public_id: uploadedPublicId });
       }
     } catch (error) {
       console.error('Error uploading file:', error);

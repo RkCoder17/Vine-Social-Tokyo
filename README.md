@@ -1,21 +1,20 @@
 # Vine Social Tokyo - Restaurant Website
 
-A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flavours with a modern tapas experience. Built with React (frontend) and FastAPI (backend) with MongoDB database.
+A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flavours with a modern tapas experience. Built with React (frontend) and FastAPI (backend, running as a single Vercel serverless function) with MongoDB Atlas as the database.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-/app/
-├── backend/                      # FastAPI backend server
-│   ├── server.py                # Main FastAPI application with all API endpoints
-│   ├── requirements.txt         # Python dependencies
-│   └── .env                     # Backend environment variables
+vine-social-tokyo/
+├── api/
+│   └── index.py                  # FastAPI app — deployed as one Vercel serverless function
+├── requirements.txt              # Python dependencies (must stay at repo root for Vercel)
+├── vercel.json                   # Routes /api/* to the function, everything else to the React build
 │
 ├── frontend/                     # React frontend application
 │   ├── public/
-│   │   └── uploads/             # Local folder for uploaded images
 │   ├── src/
 │   │   ├── components/          # Reusable React components
 │   │   │   ├── Header.js       # Navigation header with glassmorphism
@@ -33,11 +32,14 @@ A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flav
 │   │   └── index.css           # Global styles with custom theme
 │   ├── package.json            # Node.js dependencies
 │   ├── tailwind.config.js      # Tailwind CSS configuration
-│   └── .env                    # Frontend environment variables
+│   └── .env.production         # Frontend environment variables (left empty — same-origin API)
 │
 ├── design_guidelines.json       # UI/UX design specifications
+├── DEPLOYMENT.md                 # Step-by-step deployment guide
 └── README.md                    # This file
 ```
+
+One Vercel project serves both the React app and the API — there's no separate backend host.
 
 ---
 
@@ -134,9 +136,9 @@ A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flav
 
 | File | Purpose |
 |------|---------|
-| `server.py` | Main FastAPI server with all API endpoints (auth, menu, gallery, contact, settings, file upload) |
-| `requirements.txt` | Python dependencies (FastAPI, motor, passlib, python-jose, python-multipart, etc.) |
-| `.env` | Environment variables (MongoDB URL, DB name, CORS origins, JWT secret key) |
+| `api/index.py` | FastAPI app with all API endpoints (auth, menu, gallery, contact, settings, image upload) — deployed as one Vercel serverless function |
+| `requirements.txt` | Python dependencies (must live at repo root, not inside `api/`, for Vercel to detect them) |
+| `api/.env` | Local-only environment variables for `vercel dev` — production vars are set in the Vercel dashboard |
 
 ### Frontend Files
 
@@ -229,8 +231,8 @@ A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flav
 | PUT | `/api/menu/{item_id}` | Update menu item |
 | DELETE | `/api/menu/{item_id}` | Delete menu item |
 | POST | `/api/gallery` | Add gallery image |
-| DELETE | `/api/gallery/{image_id}` | Delete gallery image (also removes local file) |
-| POST | `/api/upload` | Upload file to `/public/uploads/` |
+| DELETE | `/api/gallery/{image_id}` | Delete gallery image (also removes from Cloudinary) |
+| POST | `/api/upload` | Upload image to Cloudinary, returns secure URL |
 | GET | `/api/contact` | Get all contact submissions |
 | PUT | `/api/settings` | Update restaurant settings |
 
@@ -238,11 +240,13 @@ A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flav
 
 ## 🔐 Admin Credentials
 
-**Default Admin Login:**
-- Email: `admin@vinesocial.tokyo`
-- Password: `VineSocial2024!`
+Admin login is seeded the first time the API runs, from environment variables — there is no hardcoded default.
 
-*Note: Change these credentials in production by updating the admin user in MongoDB.*
+Set these on Vercel before first deploy:
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+
+*Note: To change credentials after the admin user already exists, update the password by re-hashing it, or delete the `admin_users` document in Atlas — the next request will reseed it from the current env vars.*
 
 ---
 
@@ -257,15 +261,19 @@ A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flav
 - **Axios** - HTTP requests
 
 ### Backend
-- **FastAPI** - Modern Python web framework
+- **FastAPI** - Modern Python web framework, deployed as one Vercel serverless function
 - **Motor** - Async MongoDB driver
 - **Pydantic** - Data validation
 - **Passlib** - Password hashing (bcrypt)
 - **Python-JOSE** - JWT token handling
 - **Python-Multipart** - File upload support
+- **Cloudinary** - Image hosting (Vercel's filesystem is read-only, so uploads can't go to local disk)
 
 ### Database
-- **MongoDB** - NoSQL database
+- **MongoDB Atlas** - NoSQL database, free M0 tier
+
+### Hosting
+- **Vercel** - Single project serves both the React build and the `/api` serverless function. No separate backend host needed.
 
 ---
 
@@ -274,38 +282,41 @@ A modern, elegant website for Vine Social Tokyo restaurant featuring Indian flav
 ### Prerequisites
 - Python 3.11+
 - Node.js 18+
-- MongoDB running on localhost:27017
+- MongoDB running on localhost:27017 (or an Atlas connection string)
+- A free Cloudinary account (for image uploads)
+- [Vercel CLI](https://vercel.com/docs/cli) for local testing: `npm i -g vercel`
 
-### Backend Setup
+### Local development
 ```bash
-cd /app/backend
-pip install -r requirements.txt
-# Server runs automatically via supervisor on 0.0.0.0:8001
-```
+# Frontend (terminal 1)
+cd frontend
+npm install
+npm start          # runs on localhost:3000
 
-### Frontend Setup
-```bash
-cd /app/frontend
-yarn install
-# Server runs automatically via supervisor on port 3000
+# Full stack with API (terminal 2, from repo root)
+vercel dev          # runs both frontend and api/index.py together, simulating production
 ```
 
 ### Environment Variables
 
-**Backend (.env):**
+**`api/.env`** (local only — in production these are set in the Vercel dashboard):
 ```
-MONGO_URL="mongodb://localhost:27017"
-DB_NAME="test_database"
-CORS_ORIGINS="*"
-SECRET_KEY="vine-social-tokyo-secret-key-2024-change-in-production"
+MONGO_URL=mongodb://localhost:27017
+DB_NAME=vine_social_tokyo
+CORS_ORIGINS=*
+SECRET_KEY=<generate a long random string>
+ADMIN_EMAIL=admin@vinesocial.tokyo
+ADMIN_PASSWORD=<choose a strong password>
+CLOUDINARY_CLOUD_NAME=<from cloudinary dashboard>
+CLOUDINARY_API_KEY=<from cloudinary dashboard>
+CLOUDINARY_API_SECRET=<from cloudinary dashboard>
 ```
 
-**Frontend (.env):**
+**`frontend/.env.production`:**
 ```
-REACT_APP_BACKEND_URL=https://vine-social-tokyo.preview.emergentagent.com
-WDS_SOCKET_PORT=443
-ENABLE_HEALTH_CHECK=false
+REACT_APP_BACKEND_URL=
 ```
+Left empty intentionally — the frontend and API share the same Vercel domain, so requests go to a relative `/api/...` path instead of a separate backend URL.
 
 ---
 
@@ -343,11 +354,11 @@ ENABLE_HEALTH_CHECK=false
 
 ## 📸 Image Management
 
-### Local Storage
-- Images uploaded via admin panel are stored in `/app/frontend/public/uploads/`
-- Each file gets a unique UUID filename
-- When deleting images from admin panel, the local file is also removed
-- Accessible via `/uploads/{filename}` in the frontend
+### Cloudinary (production)
+- Images uploaded via the admin panel are sent straight to Cloudinary — Vercel's serverless functions have a read-only, ephemeral filesystem, so a local uploads folder isn't an option there
+- Each upload returns a permanent `secure_url` (e.g. `https://res.cloudinary.com/...`) plus a `public_id`
+- When deleting a gallery image from the admin panel, the file is also removed from Cloudinary
+- Free tier gives 25GB storage / 25GB bandwidth, which is plenty for a restaurant site
 
 ### External URLs
 - You can also use external image URLs (Unsplash, Pexels, etc.)
@@ -358,7 +369,7 @@ ENABLE_HEALTH_CHECK=false
 ## 🎨 Customization Guide
 
 ### Changing Colors
-Edit `/app/frontend/src/index.css`:
+Edit `frontend/src/index.css`:
 ```css
 :root {
   --background: 15 15 15;        /* Background color */
@@ -369,7 +380,7 @@ Edit `/app/frontend/src/index.css`:
 ```
 
 ### Changing Fonts
-Edit `/app/frontend/src/index.css`:
+Edit `frontend/src/index.css`:
 ```css
 @import url('https://fonts.googleapis.com/css2?family=YourFont&display=swap');
 
@@ -380,22 +391,19 @@ body {
 
 ### Adding Menu Categories
 Update `CATEGORIES` array in:
-- `/app/frontend/src/pages/Menu.js`
-- `/app/frontend/src/pages/Admin.js`
+- `frontend/src/pages/Menu.js`
+- `frontend/src/pages/Admin.js`
 
 ---
 
 ## 🚨 Important Notes
 
-1. **Do NOT hardcode URLs or credentials** in code - always use environment variables
-2. **File uploads** are stored locally in `/public/uploads/` - ensure this folder exists
-3. **Admin password** should be changed in production
-4. **JWT secret key** should be changed in production
-5. **MongoDB connection** uses the existing MONGO_URL from .env
-6. **Services restart** is only needed when:
-   - Installing new dependencies
-   - Changing .env files
-   - Other changes use hot reload automatically
+1. **Do NOT hardcode URLs or credentials** in code — always use environment variables
+2. **Image uploads** go to Cloudinary, not local disk — Vercel's filesystem can't persist files between requests
+3. **Admin password** is set via the `ADMIN_PASSWORD` env var before first deploy, not hardcoded
+4. **JWT secret key** must be set via the `SECRET_KEY` env var — there is no default fallback
+5. **MongoDB connection** uses `MONGO_URL` from env vars (Atlas connection string in production)
+6. **One Vercel project** serves both frontend and API — `api/index.py` becomes a single serverless function that handles every `/api/*` route
 
 ---
 
@@ -418,26 +426,28 @@ Update `CATEGORIES` array in:
 **Backend:**
 - [ ] API endpoints return correct data
 - [ ] Authentication works (JWT)
-- [ ] File upload saves to correct folder
+- [ ] Image upload returns a Cloudinary URL
 - [ ] Database operations work (CRUD)
-- [ ] Admin seeding runs on startup
+- [ ] Admin account seeds correctly on first request
 
 ### API Testing with curl
 
+Replace `YOUR_SITE_URL` with your deployed Vercel URL (or `http://localhost:3000` when running `vercel dev` locally).
+
 ```bash
 # Get menu items
-curl https://vine-social-tokyo.preview.emergentagent.com/api/menu
+curl YOUR_SITE_URL/api/menu
 
 # Get settings
-curl https://vine-social-tokyo.preview.emergentagent.com/api/settings
+curl YOUR_SITE_URL/api/settings
 
 # Login as admin
-curl -X POST https://vine-social-tokyo.preview.emergentagent.com/api/admin/login \
+curl -X POST YOUR_SITE_URL/api/admin/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@vinesocial.tokyo","password":"VineSocial2024!"}'
+  -d '{"email":"YOUR_ADMIN_EMAIL","password":"YOUR_ADMIN_PASSWORD"}'
 
 # Add menu item (replace {TOKEN})
-curl -X POST https://vine-social-tokyo.preview.emergentagent.com/api/menu \
+curl -X POST YOUR_SITE_URL/api/menu \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer {TOKEN}" \
   -d '{"category":"Small Plates","name":"Test Dish","description":"Delicious test","price":"¥800"}'
@@ -447,12 +457,14 @@ curl -X POST https://vine-social-tokyo.preview.emergentagent.com/api/menu \
 
 ## 🔄 Deployment
 
-The application is designed to run in a Kubernetes environment with:
-- Backend on internal port 8001
-- Frontend on internal port 3000
-- External access via REACT_APP_BACKEND_URL
-- Hot reload enabled for development
-- Supervisor for process management
+See **DEPLOYMENT.md** in the project root for the full step-by-step guide. Summary:
+
+| Layer | Service | Cost |
+|---|---|---|
+| Frontend + Backend | Vercel (one project) | Free |
+| Database | MongoDB Atlas (M0) | Free |
+| Images | Cloudinary | Free |
+| Domain | Your registrar | ~$10–12/year |
 
 ---
 

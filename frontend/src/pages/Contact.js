@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, MessageSquare } from 'lucide-react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://vine-social-tokyo.onrender.com';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const Contact = () => {
